@@ -1,0 +1,14 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    {{ item.interface }}:
+{% if item.dns is defined %}
+      nameservers:
+{% if item.dns.nameservers is defined and item.dns.nameservers %}
+        addresses:
+{% for ns in item.dns.nameservers %}
+          - {{ ns }}
+{% endfor %}
+{% endif %}
+{% endif %}
