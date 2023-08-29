@@ -1,31 +1,44 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role changes the DNS addresses of the network interface
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role is limited to:
+
+Ubuntu 16.04
+Ubuntu 18.04
+Ubuntu 20.04
+Ubuntu 22.04
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+dns_servers --- list of IPs for DNS servers, default ['8.8.8.8', '1.1.1.1']
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+   ---
+- name: Playbook to run role netplan-dns
+  hosts: servers
+  become: true
+  vars:
+    interfaces:
+    - interface: ens3
+      dns:
+        nameservers:
+        - "8.8.8.8"
+        - "1.1.1.1"
+  roles:
+     - role: '/root/roles/netplan-dns'
 
 License
 -------
@@ -34,6 +47,8 @@ BSD
 
 Author Information
 ------------------
+
+t.me/lambtalk
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
 # netplan-dns
